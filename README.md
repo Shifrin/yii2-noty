@@ -1,4 +1,4 @@
-# yii-noty
+# yii2-noty
 Yii widget for Noty jQuery notification plugin, [Visit Noty](http://ned.im/noty/#/about)
 
 ## Installation:
