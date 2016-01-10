@@ -15,6 +15,7 @@ namespace shifrin\noty;
 
 use Yii;
 use yii\base\Widget;
+use yii\web\View;
 use yii\helpers\Html;
 use yii\helpers\Json;
 
@@ -101,7 +102,7 @@ class NotyWidget extends Widget
                 $type = $this->verifyType($type);
                 $icon = $this->getIcon($type);
                 $text = is_array($message) ? $icon . implode(' ', $message) : $icon . $message;
-                $script .= "var {$type} = Noty({$this->getId()});\r\n";
+                $script .= "var {$type} = Noty('{$this->getId()}');\r\n";
                 $script .= "$.noty.setText({$type}.options.id, '{$text}');\r\n";
                 $script .= "$.noty.setType({$type}.options.id, '{$type}');\r\n";
             }
