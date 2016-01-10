@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Mohammad
- * Date: 01/05/2016
- * Time: 3:48 PM
+ * NotyAsset Class File
+ *
+ * This is a helper class which is used to register required widget assets.
+ *
+ * @author Mohammad Shifreen
+ * @link http://www.yiiframework.com/extension/yii2-noty/
+ * @copyright 2016 Mohammed Shifreen
+ * @license https://github.com/Shifrin/yii2-noty/blob/master/LICENSE.md
  */
 
 namespace shifrin\noty;
@@ -16,10 +20,8 @@ class NotyAsset extends AssetBundle
 
     public $sourcePath = '@bower/noty';
     public $animateCss;
+    public $buttonsCss;
     public $fontAwesomeCss;
-    public $css = [
-        'demo/button.css'
-    ];
     public $js = [
         'js/noty/packaged/jquery.noty.packaged.min.js'
     ];
@@ -40,6 +42,10 @@ class NotyAsset extends AssetBundle
 
         if ($this->fontAwesomeCss) {
             $this->css[] = 'demo/font-awesome/css/font-awesome.min.css';
+        }
+
+        if ($this->buttonsCss) {
+            $this->css[] = 'demo/buttons.css';
         }
 
         parent::registerAssetFiles($view);

@@ -1,9 +1,14 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Mohammad
- * Date: 01/05/2016
- * Time: 3:55 PM
+ * NotyWidget Class File
+ *
+ * It's a yii2 widget for alert type of messages that can be shown to the end user
+ * This widget build with noty jQuery plugin v2.3.7. @link http://ned.im/noty/
+ *
+ * @author Mohammad Shifreen
+ * @link http://www.yiiframework.com/extension/yii2-noty/
+ * @copyright 2016 Mohammed Shifreen
+ * @license https://github.com/Shifrin/yii2-noty/blob/master/LICENSE.md
  */
 
 namespace shifrin\noty;
@@ -17,11 +22,6 @@ use yii\helpers\Json;
 class NotyWidget extends Widget
 {
 
-    /**
-     * Widget ID
-     * @var string defaults noty
-     */
-    public $id = 'noty';
     /**
      * Noty plugin JS Options
      * @var array
@@ -44,12 +44,22 @@ class NotyWidget extends Widget
      */
     public $registerAnimateCss = true;
     /**
+     * Register buttons.css
+     * If bootstrap.css or any related css already registered in your assets you can set it to false,
+     * otherwise this will override your buttons' styles
+     * @var bool defaults true
+     */
+    public $registerButtonsCss = true;
+    /**
      * Register font-awesome.css
      * If font-awesome.css already registered in your assets you can set it to false
      * @var bool defaults true
      */
     public $registerFontAwesomeCss = true;
-
+    /**
+     * Alert types
+     * @var array
+     */
     protected $types = [
         'error' => 'error',
         'success' => 'success',
@@ -57,6 +67,10 @@ class NotyWidget extends Widget
         'warning' => 'warning',
         'alert' => 'alert'
     ];
+    /**
+     * Icons based on type
+     * @var array
+     */
     protected $icons = [
         'error' => 'fa fa-times-circle',
         'success' => 'fa fa-check-circle',
@@ -74,12 +88,10 @@ class NotyWidget extends Widget
         $this->registerAssets();
         $this->registerPlugin();
 
-        $view = $this->getView();
-        $options = !empty($this->options) ? Json::encode($this->options) : '';
-        $script = "var Noty = generateNoty({$options})";
-
         if ($this->enableSessionFlash) {
             $flashes = Yii::$app->session->getAllFlashes();
+            $view = $this->getView();
+            $script = "";
 
             foreach($flashes as $type => $message) {
                 if (empty($message)) {
@@ -88,10 +100,10 @@ class NotyWidget extends Widget
 
                 $type = $this->verifyType($type);
                 $icon = $this->getIcon($type);
-                $text = $icon . is_array($message) ? implode(' ', $message) : $message;
-                $script .= "var {$type} = generateNoty({$options})";
-                $script .= "$.noty.setText({$type}.options.id, '{$text}')";
-                $script .= "$.noty.setType({$type}.options.id, '{$type}')";
+                $text = is_array($message) ? $icon . implode(' ', $message) : $icon . $message;
+                $script .= "var {$type} = Noty({$this->getId()});\r\n";
+                $script .= "$.noty.setText({$type}.options.id, '{$text}');\r\n";
+                $script .= "$.noty.setType({$type}.options.id, '{$type}');\r\n";
             }
         }
 
@@ -99,19 +111,27 @@ class NotyWidget extends Widget
     }
 
     /**
-     * Register Noty plugin
+     * Register Noty plugin by creating a wrapper function called 'Noty()'
+     * This will be available globally for use
+     *
+     * ~~~
+     * js: var n = Noty('id');
+     * $.noty.setText(n.options.id, 'Hi I am noty alert!');
+     * $.noty.setType(n.options.id, 'information');
+     * ~~~
      */
     public function registerPlugin()
     {
         $view = $this->getView();
+        $options = !empty($this->options) ? Json::encode($this->options) : '';
         $js = <<< JS
-        function generateNoty(options) {
-            var n = noty(options);
-            return n;
-        }
+            function Noty(widgetId, options) {
+                var finalOptions = $.extend({}, $options, options);
+                return noty(finalOptions);
+            }
 JS;
 
-        $view->registerJs($js);
+        $view->registerJs($js, View::POS_END);
     }
 
     /**
@@ -122,11 +142,13 @@ JS;
         $view = $this->getView();
         $asset = NotyAsset::register($view);
         $asset->animateCss = $this->registerAnimateCss;
+        $asset->buttonsCss = $this->registerButtonsCss;
         $asset->fontAwesomeCss = $this->enableIcon && $this->registerFontAwesomeCss;
     }
 
     /**
-     * Verify type, if not return defalut type
+     * Verify type.
+     * If verify unsuccessful it will return default type called 'notification'
      * @param $type string
      * @return string
      */
