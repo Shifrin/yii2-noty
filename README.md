@@ -1,6 +1,8 @@
 # yii2-noty
 Yii widget for Noty jQuery notification plugin, [Visit Noty](http://ned.im/noty/#/about)
 
+> For Yii1: Please check [yii-noty](https://github.com/Shifrin/yii-noty)
+
 ## Installation:
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/)
 > Note: The instructions below refer to the global composer installation. You might need to replace `composer` with php `composer.phar` (or similar) for your setup.
