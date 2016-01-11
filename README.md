@@ -21,24 +21,24 @@ composer update
 
 ## Usage Details:
 Add the widget in your main layout file like below,
-```
-\shifrin\noty\NotyWidget::widget([
-  'options' => [ // you can add js options here, see noty plugin page for available options
-    'dismissQueue' => true,
-    'layout' => 'topCenter',
-    'theme' => 'relax',
-    'animation' => [
-      'open' => 'animated flipInX',
-      'close' => 'animated flipOutX',
+```php
+<?php \shifrin\noty\NotyWidget::widget([
+    'options' => [ // you can add js options here, see noty plugin page for available options
+        'dismissQueue' => true,
+        'layout' => 'topCenter',
+        'theme' => 'relax',
+        'animation' => [
+            'open' => 'animated flipInX',
+            'close' => 'animated flipOutX',
+        ],
+        'timeout' => false,
     ],
-    'timeout' => false
-  ],
-  'enableSessionFlash' => true
-  'enableIcon' => true,
-  'registerAnimateCss' => true,
-  'registerButtonsCss' => true,
-  'registerFontAwesomeCss' => true,
-]);
+    'enableSessionFlash' => true,
+    'enableIcon' => true,
+    'registerAnimateCss' => true,
+    'registerButtonsCss' => true,
+    'registerFontAwesomeCss' => true,
+]); ?>
 ```
 
 This widget will create a JS function `Noty()`, so it will be available globally and you can call this function in your custom JS codes. See the following example below
