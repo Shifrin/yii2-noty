@@ -1,5 +1,5 @@
 # yii2-noty
-Yii widget for Noty jQuery notification plugin, [Visit Noty](http://ned.im/noty/#/about)
+Yii2 widget for Noty jQuery notification plugin, [Visit Noty](http://ned.im/noty/#/about)
 
 > For Yii1: Please check [yii-noty](https://github.com/Shifrin/yii-noty)
 
@@ -48,7 +48,7 @@ $.noty.setText(n.options.id, 'Welcome to our site!');
 $.noty.setType(n.options.id, 'information');
 ```
 
-You can set the flash messages like this in your controller or anywhere you need. However if you set `enableSessionFlash` to `false` it won't be effect.
+You can set the flash messages like this in your controller or anywhere you need. However, if you set `enableSessionFlash` to `false` it won't be affected.
 ```
 \Yii::$app->session->setFlash('type', 'Message here');
 ```
