@@ -42,14 +42,14 @@ Add the widget in your main layout file like below,
 ```
 
 This widget will create a JS function `Noty()`, so it will be available globally and you can call this function in your custom JS codes. See the following example below
-```
+```javascript
 var n = Noty('id');
 $.noty.setText(n.options.id, 'Welcome to our site!');
 $.noty.setType(n.options.id, 'information');
 ```
 
 You can set the flash messages like this in your controller or anywhere you need. However, if you set `enableSessionFlash` to `false` it won't be affected.
-```
+```php
 \Yii::$app->session->setFlash('type', 'Message here');
 ```
 
