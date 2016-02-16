@@ -5,7 +5,7 @@
     "type": "yii2-extension",
     "license": "MIT",
     "require": {
-        "yiisoft/yii2": "2.0.6",
+        "yiisoft/yii2": ">=2.0.6",
         "bower-asset/noty": "^2.3"
     },
     "authors": [
