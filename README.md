@@ -9,11 +9,11 @@ The preferred way to install this extension is through [composer](http://getcomp
 
 Direct install:
 ```
-composer require shifrin/yii2-noty 1.0.1
+composer require shifrin/yii2-noty
 ```
 or add it manually to the `composer.json` and update `composer`
 ```
-"shifrin/yii2-noty": "1.0.1",
+"shifrin/yii2-noty": "1.0.*",
 ```
 ```
 composer update
