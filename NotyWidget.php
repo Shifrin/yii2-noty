@@ -91,6 +91,11 @@ class NotyWidget extends Widget
 
         if ($this->enableSessionFlash) {
             $flashes = Yii::$app->session->getAllFlashes();
+            
+            if (empty($flashes)) {
+                return;
+            }
+            
             $view = $this->getView();
             $script = "";
 
@@ -106,9 +111,9 @@ class NotyWidget extends Widget
                 $script .= "$.noty.setText({$type}.options.id, '{$text}');\r\n";
                 $script .= "$.noty.setType({$type}.options.id, '{$type}');\r\n";
             }
+            
+            $view->registerJs($script);
         }
-
-        $view->registerJs($script);
     }
 
     /**
